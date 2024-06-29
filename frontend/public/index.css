@@ -1,0 +1,53 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  box-sizing: border-box;
+}
+
+.bg {
+  background-color: rgb(240, 242, 246);
+}
+
+
+.d-flex {
+  display: flex;
+}
+
+.input{
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 10px;
+}
+
+.sec{
+  scrollbar-color:  rgb(46,54,69) rgb(210,210,210) !important;
+  scrollbar-width: thin !important;
+}
+
+.sec {
+  max-height: 300px;
+  padding: 4px 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+}
+
+
+.pointer{
+  cursor: pointer;
+}
+
+.item {
+  background-color: white;
+  padding: 4px 10px;
+}
+
+.item:hover, .active{
+  background-color: red;
+  color: white;
+}
