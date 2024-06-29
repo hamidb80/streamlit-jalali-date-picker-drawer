@@ -1,3 +1,5 @@
+// imports ----c----------------------------
+
 import React from "react"
 
 import {
@@ -9,6 +11,7 @@ import { ComponentProps } from "streamlit-component-lib/dist/StreamlitReact"
 
 const jalaali = require('jalaali-js')
 
+// types -----------------------------------
 
 type Year = number
 type Month = number
@@ -126,20 +129,11 @@ class MyComponent extends StreamlitComponentBase<State, Props> {
     }
 
     this.onChange = this.onChange.bind(this)
-    this.activate = this.activate.bind(this)
-    this.deActivate = this.deActivate.bind(this)
     this.toggle = this.toggle.bind(this)
   }
 
   toggle() {
     this.setState({ is_active: !this.state.is_active })
-  }
-
-  activate() {
-    this.setState({ is_active: true })
-  }
-  deActivate() {
-    this.setState({ is_active: false })
   }
 
   render() {
@@ -173,5 +167,7 @@ class MyComponent extends StreamlitComponentBase<State, Props> {
     Streamlit.setComponentValue(date)
   }
 }
+
+// Export ----------------------------------
 
 export default withStreamlitConnection(MyComponent)
