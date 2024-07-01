@@ -31,6 +31,7 @@ type Props = {
   selected: DateFormat
   start: DateFormat
   end: DateFormat
+  joiner: string
   close_on_select_day: boolean
 }
 
@@ -130,6 +131,17 @@ class MyComponent extends StreamlitComponentBase<State, Props> {
 
     this.onChange = this.onChange.bind(this)
     this.toggle = this.toggle.bind(this)
+    this.open = this.open.bind(this)
+    this.close = this.close.bind(this)
+  }
+
+
+  open() {
+    this.setState({ is_active: true })
+  }
+
+  close() {
+    this.setState({ is_active: false })
   }
 
   toggle() {
@@ -138,13 +150,13 @@ class MyComponent extends StreamlitComponentBase<State, Props> {
 
   render() {
     // let { theme } = this.props
-    let { start, end } = this.props.args
+    let { start, end, joiner } = this.props.args
     let { selected } = this.state
 
-    return <div className="wrapper">
-      <div className="bg input pointer" onClick={this.toggle}>
+    return <div className="wrapper" onMouseLeave={this.close}>
+      <div className="bg input pointer" onMouseEnter={this.open}>
         <span>
-          {selected.join(' - ')}
+          {selected.join(joiner)}
         </span>
       </div>
 

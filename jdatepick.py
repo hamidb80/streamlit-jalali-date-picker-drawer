@@ -5,17 +5,18 @@ import streamlit.components.v1 as components
 
 # config --------------------------------------
 
-release_mode = os.getenv('JALALI_DATA_PICKER_DEBUG', "") == ""
+pkg_name = "jalali-date-picker-drawer"
+dev_server = os.getenv('JALALI_DATA_PICKER_DEV_SERVER') # e.g. "http://localhost:3001"
 
-if not release_mode:
-    component_fn = components.declare_component(
-        "jalali-date-picker-drawer", 
-        url="http://localhost:3001")
+if dev_server:
+    print(f"---- {pkg_name} debug mode ------")
+    print(f"---- server: {dev_server}")
+    component_fn = components.declare_component(pkg_name, url=dev_server)
 
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "jdatepick")
-    component_fn = components.declare_component("jdatepick", path=build_dir)
+    component_fn = components.declare_component(pkg_name, path=build_dir)
 
 # types ------------------------------------------
 
@@ -30,6 +31,7 @@ def jalali_date_picker_drawer(
         default: Date, 
         start: Date, 
         end: Date, 
+        joiner: str = '/',
         close_on_select_day: bool = True, 
         key=None
 ):
@@ -46,6 +48,7 @@ def jalali_date_picker_drawer(
         selected=default,
         start=start, 
         end=end, 
+        joiner = joiner,
         
         close_on_select_day = close_on_select_day,
 
