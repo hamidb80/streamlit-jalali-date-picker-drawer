@@ -47,7 +47,11 @@
   padding: 4px 10px;
 }
 
-.item:hover, .active{
+.item:hover{
+  background-color: brown;
+  color: white;
+}
+.item.active{
   background-color: red;
   color: white;
 }

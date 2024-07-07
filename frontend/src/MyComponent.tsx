@@ -32,6 +32,7 @@ type Props = {
   start: DateFormat
   end: DateFormat
   joiner: string
+  show_when: "click" | "hover"
   close_on_select_day: boolean
 }
 
@@ -65,6 +66,10 @@ function daysOfMonth(year: number, month: number): number {
 
 // React things ----------------------------
 
+function int2str(n: number) {
+  return n >= 10 ? `${n}` : `0${n}`
+}
+
 function drawer(selected: DateFormat, head: DateFormat, tail: DateFormat, onSelect: SelectFn) {
   let years =
     range(head[Y], tail[Y])
@@ -89,7 +94,7 @@ function drawer(selected: DateFormat, head: DateFormat, tail: DateFormat, onSele
           y => <div
             onClick={() => onSelect(y, selected[M], selected[D], Y)}
             className={clsx(y === selected[Y])}>
-            {y}
+            {int2str(y)}
           </div>
         )
       }
@@ -100,7 +105,7 @@ function drawer(selected: DateFormat, head: DateFormat, tail: DateFormat, onSele
           m => <div
             onClick={() => onSelect(selected[Y], m, selected[D], M)}
             className={clsx(m === selected[M])}>
-            {m}
+            {int2str(m)}
           </div>
         )
       }
@@ -111,7 +116,7 @@ function drawer(selected: DateFormat, head: DateFormat, tail: DateFormat, onSele
           d => <div
             onClick={() => onSelect(selected[Y], selected[M], d, D)}
             className={clsx(d === selected[D])}>
-            {d}
+            {int2str(d)}
           </div>
         )
       }
@@ -133,6 +138,10 @@ class MyComponent extends StreamlitComponentBase<State, Props> {
     this.toggle = this.toggle.bind(this)
     this.open = this.open.bind(this)
     this.close = this.close.bind(this)
+
+    this.mouseEnterHandler = this.mouseEnterHandler.bind(this)
+    this.mouseLeaveHandler = this.mouseLeaveHandler.bind(this)
+    this.mouseClickHandler = this.mouseClickHandler.bind(this)
   }
 
 
@@ -148,13 +157,28 @@ class MyComponent extends StreamlitComponentBase<State, Props> {
     this.setState({ is_active: !this.state.is_active })
   }
 
+
+  mouseEnterHandler() {
+    if (this.props.args.show_when === 'hover')
+      this.open()
+  }
+
+  mouseClickHandler() {
+    if (this.props.args.show_when === 'click')
+      this.toggle()
+  }
+
+  mouseLeaveHandler() {
+      this.close()
+  }
+
   render() {
     // let { theme } = this.props
     let { start, end, joiner } = this.props.args
     let { selected } = this.state
 
-    return <div className="wrapper" onMouseLeave={this.close}>
-      <div className="bg input pointer" onMouseEnter={this.open}>
+    return <div className="wrapper" onMouseLeave={this.mouseLeaveHandler}>
+      <div className="bg input pointer" onMouseEnter={this.mouseEnterHandler} onClick={this.mouseClickHandler}>
         <span>
           {selected.join(joiner)}
         </span>
