@@ -64,6 +64,31 @@ function daysOfMonth(year: number, month: number): number {
   else throw new Error(`Invalid month: ${month}`)
 }
 
+function cmpArray(a: number[], b: number[]): number {
+  let size = Math.min(a.length, b.length)
+
+  for (let i = 0; i < size; i++) {
+    if (a[i] > b[i]) return +1
+    if (a[i] < b[i]) return -1
+  }
+  return 0
+}
+
+function isMoreThan(a: number[], b: number[]): boolean {
+  return cmpArray(a, b) === +1
+}
+
+function isLessThan(a: number[], b: number[]): boolean {
+  return cmpArray(a, b) === -1
+}
+
+function isLessEqThan(a: number[], b: number[]): boolean {
+  return !isMoreThan(a, b)
+}
+function isMoreEqThan(a: number[], b: number[]): boolean {
+  return !isLessThan(a, b)
+}
+
 // React things ----------------------------
 
 function int2str(n: number) {
@@ -124,6 +149,14 @@ function drawer(selected: DateFormat, head: DateFormat, tail: DateFormat, onSele
   </div>
 }
 
+function atleast2(n: number): string {
+  return (n < 10) ? `0${n}` : `${n}`
+}
+
+function form_date(date: number[], joiner: string): string {
+  return date.map(atleast2).join(joiner)
+}
+
 class MyComponent extends StreamlitComponentBase<State, Props> {
 
   constructor(props: any) {
@@ -177,10 +210,16 @@ class MyComponent extends StreamlitComponentBase<State, Props> {
     let { start, end, joiner } = this.props.args
     let { selected } = this.state
 
+    if (isLessThan(selected, start))
+      this.setState({selected: start})
+
+    if (isLessThan(end, selected))
+      this.setState({selected: end})
+
     return <div className="wrapper" onMouseLeave={this.mouseLeaveHandler}>
       <div className="bg input pointer" onMouseEnter={this.mouseEnterHandler} onClick={this.mouseClickHandler}>
         <span>
-          {selected.join(joiner)}
+          {form_date(selected, joiner)}
         </span>
       </div>
 
