@@ -43,13 +43,13 @@ def jalali_date_picker_drawer(
     `show_when` can be 'hover' or 'click'
 
     date = jalali_date_picker_drawer(
-        "1402-7-3" , 
+        "1402-07-3" , 
         "1407-11-2", 
-        "1403-6-10",
+        "1403-06-10",
     )
     """
 
-    val = component_fn(
+    ret_val = component_fn(
         selected= extract_numbers(default),
         start   = extract_numbers(start), 
         end     = extract_numbers(end), 
@@ -62,4 +62,4 @@ def jalali_date_picker_drawer(
         key=key, 
         default=extract_numbers(default))
 
-    return f"{val[0]}{joiner}{val[1]}{joiner}{val[2]}"
+    return f"{ret_val[0]}{joiner}{ret_val[1]:02}{joiner}{ret_val[2]:02}"
