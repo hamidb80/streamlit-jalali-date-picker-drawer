@@ -38,13 +38,11 @@ def jalali_date_picker_drawer(
         key=None
 ):
     """
-    select from 1402-7-3 to 1407-11-2 with default day of 1403-6-10 
-
     `show_when` can be 'hover' or 'click'
 
     date = jalali_date_picker_drawer(
-        "1402-07-3" , 
-        "1407-11-2", 
+        "1402-07-13" , 
+        "1401-11-02", 
         "1403-06-10",
     )
     """
